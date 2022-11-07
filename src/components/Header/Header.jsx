@@ -6,20 +6,19 @@ import checked from "./images/checkMark.png";
 const Header = (props) => {
   const [todoTitle, setTodoTitle] = React.useState("");
 
-  const handleExamValidateString = (e) => {
+  const handleValidateGetTodoTitle = (e) => {
     if (e.key === "Enter") {
       if (!e.target.value.trim()) {
+        setTodoTitle("");
         return;
       }
-      props.onConfirm(todoTitle);
-      setTodoTitle('')
+      props.createTodoElement(todoTitle.trim());
+      setTodoTitle("");
     }
   };
-
-  const onChange = (e) => {
+  const handleSetTitle = (e) => {
     setTodoTitle(e.target.value);
   };
-
   return (
     <header className={styles.header}>
       <button>
@@ -29,12 +28,11 @@ const Header = (props) => {
         className={styles.headerInput}
         type="text"
         value={todoTitle}
-        onChange={onChange}
-        onKeyUp={handleExamValidateString}
         placeholder="What needs to be done?"
+        onKeyUp={handleValidateGetTodoTitle}
+        onChange={handleSetTitle}
       />
     </header>
   );
 };
-
 export default Header;

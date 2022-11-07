@@ -1,13 +1,19 @@
-import React from 'react'
-import ListItem from '../ListItem'
+import React from "react";
+import ListItem from "../ListItem";
 
-const TodoLists = () => {
+const TodoLists = (props) => {
   return (
-    <div>
-    TodoLists
-    <ListItem/>
-    </div>
-  )
-}
+    <ul>
+      {props.arrayTodos.map((item) => (
+        <ListItem
+          key={item.id}
+          todo={item}
+          complete={props.completeTodo}
+          delete={props.deleteTodo}
+        />
+      ))}
+    </ul>
+  );
+};
 
-export default TodoLists
+export default TodoLists;

@@ -4,21 +4,30 @@ import TodoLists from "./components/TodoLists/TodoLists";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 function App() {
-  // const [todoTitle, setTodoTitle] = React.useState("");
   const [arrayTodos, setArrayTodos] = React.useState([]);
-  const [filterArrayTodos, setFilterArrayTodos] = React.useState('completed');
-  // React.useEffect(() => {
-  //   arrayTodos.map((item) => ({
-  //     title: todoTitle,
-  //     isCompleted: false,
-  //     id: uuidv4(),
-  //   }));
-  // }, [arrayTodos, todoTitle]);
 
+  const [filterTodos, setFilteTodos] = React.useState("all");
+  const createTodoElement = (text) => {
+    setArrayTodos((prevsTate) => [
+      ...prevsTate,
+      { title: text, complete: false, id: uuidv4() },
+    ]);
+  };
+  const completeTodo = () => {};
+
+  const deleteTodo = (id) => {
+    const resulArr = arrayTodos.filter((item) => item.id !== id);
+    setArrayTodos(resulArr);
+  };
+  console.log(arrayTodos);
   return (
     <>
-      <Header onConfirm={(text) => {console.log(text)}} />
-      <TodoLists />
+      <Header createTodoElement={createTodoElement} />
+      <TodoLists
+        completeTodo={completeTodo}
+        deleteTodo={deleteTodo}
+        arrayTodos={arrayTodos}
+      />
       <Footer />
     </>
   );
