@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
 }
-.listBlock:hover .buttonDelete {
+.buttonDelete:hover {
   background-color: rgb(47, 255, 227);
   padding: 10px;
 

@@ -1,6 +1,9 @@
 import React from "react";
+
 import ListItem from "../ListItem";
+
 import styles from "./TodoLists.module.css";
+
 const TodoLists = (props) => {
   return (
     <ul className={styles.todosBlock}>
@@ -8,9 +11,9 @@ const TodoLists = (props) => {
         <ListItem
           key={item.id}
           todo={item}
-          complete={props.completeTodo}
-          delete={props.deleteTodo}
-          editTodo={props.onEditTodo}
+          onComplete={props.onCompleteTodo}
+          onDelete={props.onDeleteTodo}
+          onEditTodo={props.onEditTodo}
         />
       ))}
     </ul>

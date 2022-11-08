@@ -11,7 +11,6 @@ const App = () => {
   );
   const [filterTodos, setFilterTodos] = React.useState("all");
 
-
   React.useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(arrayTodos));
   }, [arrayTodos]);
@@ -30,13 +29,11 @@ const App = () => {
       ...prevsTate,
       { title: text, complete: false, id: uuidv4() },
     ]);
-    // localStorage.setItem('todo', JSON.stringify(arrayTodos))
   };
 
-  const completeTodo = (id, flag) => {
+  const handleCompleteTodo = (id, flag) => {
     const resultArr = [...arrayTodos].map((item) => {
       if (item.id === id && !flag) {
-        completeTodo.countComplete++;
         return { ...item, complete: true };
       } else if (item.id === id && flag) {
         return { ...item, complete: false };
@@ -50,25 +47,33 @@ const App = () => {
     setArrayTodos(resultArr);
   };
 
-  const handleFilterFuncTodos = React.useMemo(() => {
-    // // eslint-disable-next-line array-callback-return
-    //  [...arrayTodos].filter((item) => {
-    //   if (key === "complete") {
-    //     if (item.complete) {
-    //       return { ...item, complete: true };
-    //     }
-    //   } else if (key === "active") {
-    //     if (!item.complete) {
-    //       return { ...item, complete: false };
-    //     }
-    //   } else if (key === "all") {
-    //     return { ...item };
-    //   }
-    // });
-  });
+  const handleFilterArray = (key) => {
+    setFilterTodos(key);
+    console.log(key);
+    const filterArray = [...arrayTodos].filter((item) => {
+      if (key === "complete") {
+        if (item.complete) {
+          return { ...item, complete: true };
+        }
+      } else if (key === "active") {
+        if (!item.complete) {
+          return { ...item, complete: false };
+        }
+      } else if (key === "all") {
+        return { ...item };
+      }
+    });
+    return filterArray;
+  };
 
- 
-  const deleteTodo = (id) => {
+  const filterArr = React.useMemo(() => {
+    return handleFilterArray(filterTodos);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [arrayTodos, filterTodos]);
+  console.log(filterArr, filterTodos);
+
+
+  const handleDeleteTodo = (id) => {
     const resultArr = [...arrayTodos].filter((item) => item.id !== id);
     setArrayTodos(resultArr);
   };
@@ -83,20 +88,19 @@ const App = () => {
   return (
     <>
       <Header
-        completeTodo={completeTodo}
+        handleCompleteTodo={handleCompleteTodo}
         createTodoElement={createTodoElement}
       />
       <TodoLists
-        completeTodo={completeTodo}
-        deleteTodo={deleteTodo}
-        onArrayTodos={arrayTodos}
+        onCompleteTodo={handleCompleteTodo}
+        onDeleteTodo={handleDeleteTodo}
+        onArrayTodos={filterArr}
         onEditTodo={handleEditTodo}
       />
       <Footer
-        onFilterFuncTodos={handleFilterFuncTodos}
-        onCounterAll={arrayTodos.length}
-        onsetFilterTodos={setFilterTodos}
+        onArrayLength={arrayTodos.length}
         onComplitetedCounterValue={handleCompletedCounterValue}
+        onFilterArray={handleFilterArray}
       />
     </>
   );

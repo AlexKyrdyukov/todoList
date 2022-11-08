@@ -1,20 +1,15 @@
 import React from "react";
 
 import styles from "./Footer.module.css";
+
 const Footer = (props) => {
-  // const changeState = (key) => {
-  //   props.setFilterTodos(key);
-  //   props.filterFuncTodos(key);
-  // };
-  console.log(props)
+ 
   return (
-    props.onCounterAll > 0 && (
+    props.onArrayLength > 0 && (
       <footer className={styles.footerBlock}>
+        
         <span className={styles.infoTable}>
-          Complete: {props.onComplitedCounterValue}
-        </span>
-        <span className={styles.infoTable}>
-          Active: {props.onCounterAll - props.onCompletedCounterValue}
+          Complete: {props.onComplitetedCounterValue}
         </span>
 
         {stateButton.map((item, index) => {
@@ -22,7 +17,7 @@ const Footer = (props) => {
             <button
               key={index}
               className={styles.footerButton}
-              onClick={props.onFilterFuncTodos(item.key)}
+              onClick={()=>props.onFilterArray(item.key)}
             >
               {item.value}
             </button>
