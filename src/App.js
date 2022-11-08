@@ -31,16 +31,12 @@ const App = () => {
     ]);
   };
 
-  const handleCompleteTodo = (id, flag) => {
+  const handleCompleteTodo = (id) => {
     const resultArr = [...arrayTodos].map((item) => {
-      if (item.id === id && !flag) {
+      if (item.id === id && !item.complete) {
         return { ...item, complete: true };
-      } else if (item.id === id && flag) {
+      } else if (item.id === id && item.complete) {
         return { ...item, complete: false };
-      } else if (!id && !flag) {
-        return { ...item, complete: !flag };
-      } else if (!id && flag) {
-        return { ...item, complete: !flag };
       }
       return { ...item };
     });
@@ -68,10 +64,9 @@ const App = () => {
 
   const filterArr = React.useMemo(() => {
     return handleFilterArray(filterTodos);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [arrayTodos, filterTodos]);
   console.log(filterArr, filterTodos);
-
 
   const handleDeleteTodo = (id) => {
     const resultArr = [...arrayTodos].filter((item) => item.id !== id);
