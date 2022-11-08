@@ -5,7 +5,11 @@ import styles from "./Header.module.css";
 import checked from "./images/checkMark.png";
 const Header = (props) => {
   const [todoTitle, setTodoTitle] = React.useState("");
-
+  const [buttonState, setButtonState]=React.useState(false)
+  const handleChange  = () =>{
+    props.completeTodo(undefined, buttonState)
+    setButtonState(prevState => !prevState)
+  }
   const handleValidateGetTodoTitle = (e) => {
     if (e.key === "Enter") {
       if (!e.target.value.trim()) {
@@ -21,7 +25,9 @@ const Header = (props) => {
   };
   return (
     <header className={styles.header}>
-      <button>
+      <button
+      onClick={handleChange}
+      >
         <img className={styles.headerImage} src={checked} alt="" />
       </button>
       <input

@@ -1,0 +1,23 @@
+.footerBlock {
+  background-color: rgb(231, 231, 230);
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+.footerButton {
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 5px 2px;
+}
+.infoTable {
+  border: 0.3px solid black;
+}
+.footerButton:hover {
+  background: rgb(204, 0, 255);
+}
+span {
+  background-color: rgba(28, 46, 126, 0.267);
+}

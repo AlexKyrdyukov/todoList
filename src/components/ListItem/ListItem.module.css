@@ -1,0 +1,55 @@
+.listBlock {
+  background-color: rgba(255, 255, 255, 0.973);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 1), -23px 0 20px -23px rgba(0, 0, 0, 0.8),
+    23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  display: flex;
+  align-items: center;
+}
+.listBlock:hover .buttonDelete {
+  background-color: rgb(47, 255, 227);
+  padding: 10px;
+
+}
+.button {
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 10px;
+}
+.buttonDelete {
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 10px;
+
+}
+.inputBlockCompleted {
+  background-color: rgba(255, 255, 255, 0.973);
+  text-decoration: line-through;
+  overflow: hidden;
+  color: grey;
+  padding-left: 10px;
+}
+.titleBlockCompleted {
+  padding-left: 10px;
+  width: 200px;
+  overflow: hidden;
+  text-decoration: line-through;
+  color: grey;
+}
+.titleBlock {
+  padding-left: 10px;
+  width: 200px;
+  overflow: hidden;
+}
+.inputBlock {
+  background-color: rgba(255, 255, 255, 0.973);
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+.buttonCompleted {
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 10px;
+
+  background-color: greenyellow;
+}
