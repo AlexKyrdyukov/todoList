@@ -45,7 +45,6 @@ const App = () => {
 
   const handleFilterArray = (key) => {
     setFilterTodos(key);
-    console.log(key);
     const filterArray = [...arrayTodos].filter((item) => {
       if (key === "complete") {
         if (item.complete) {
@@ -65,8 +64,7 @@ const App = () => {
   const filterArr = React.useMemo(() => {
     return handleFilterArray(filterTodos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [arrayTodos, filterTodos]);
-  console.log(filterArr, filterTodos);
+  }, [filterTodos]);
 
   const handleDeleteTodo = (id) => {
     const resultArr = [...arrayTodos].filter((item) => item.id !== id);
@@ -80,10 +78,19 @@ const App = () => {
     setArrayTodos(resultArr);
   };
 
+  const handleCompleteTodoAll = () => {
+    const resultArr = [...arrayTodos].map((item) => ({
+      ...item,
+      complete: true,
+    }));
+    console.log(resultArr);
+    setArrayTodos(resultArr);
+  };
+
   return (
     <>
       <Header
-        handleCompleteTodo={handleCompleteTodo}
+        onCompletedTodoAll={handleCompleteTodoAll}
         createTodoElement={createTodoElement}
       />
       <TodoLists

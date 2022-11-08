@@ -3,11 +3,9 @@ import React from "react";
 import styles from "./Footer.module.css";
 
 const Footer = (props) => {
- 
   return (
     props.onArrayLength > 0 && (
       <footer className={styles.footerBlock}>
-        
         <span className={styles.infoTable}>
           Complete: {props.onComplitetedCounterValue}
         </span>
@@ -17,7 +15,7 @@ const Footer = (props) => {
             <button
               key={index}
               className={styles.footerButton}
-              onClick={()=>props.onFilterArray(item.key)}
+              onClick={() => props.onFilterArray(item.key)}
             >
               {item.value}
             </button>

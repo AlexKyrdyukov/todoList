@@ -24,7 +24,7 @@ const Header = (props) => {
 
   return (
     <header className={styles.header}>
-      <button>
+      <button onClick={props.onCompletedTodoAll}>
         <img className={styles.headerImage} src={checked} alt="" />
       </button>
       <input
