@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,69 +7,67 @@ import Footer from "./components/Footer";
 import TodoLists from "./components/TodoLists";
 
 const App = () => {
+
   const [arrayTodos, setArrayTodos] = React.useState(
     JSON.parse(localStorage.getItem("todos")) || []
   );
-  const [filterTodos, setFilterTodos] = React.useState("all");
-
+  const [valueForFilter, setValueForFilter] = React.useState("all");
   React.useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(arrayTodos));
   }, [arrayTodos]);
 
-  const handleCompletedCounterValue = React.useMemo(() => {
-    return arrayTodos.reduce((counter, item) => {
-      if (item.complete) {
-        counter++;
-      }
-      return counter;
-    }, 0);
-  }, [arrayTodos]);
-
-  const createTodoElement = (text) => {
-    setArrayTodos((prevsTate) => [
-      ...prevsTate,
-      { title: text, complete: false, id: uuidv4() },
-    ]);
-  };
-
-  const handleCompleteTodo = (id) => {
-    const resultArr = [...arrayTodos].map((item) => {
-      if (item.id === id && !item.complete) {
-        return { ...item, complete: true };
-      } else if (item.id === id && item.complete) {
-        return { ...item, complete: false };
-      }
-      return { ...item };
-    });
-    setArrayTodos(resultArr);
-  };
-
-  const handleFilterArray = (key) => {
-    setFilterTodos(key);
+  const handleFilterArray = (filterValue) => {
+    setValueForFilter(filterValue)
+    setValueForFilter.countComplete = 0
     const filterArray = [...arrayTodos].filter((item) => {
-      if (key === "complete") {
-        if (item.complete) {
-          return { ...item, complete: true };
-        }
-      } else if (key === "active") {
-        if (!item.complete) {
-          return { ...item, complete: false };
-        }
-      } else if (key === "all") {
+      if (item.complete) {
+        setValueForFilter.countComplete++
+      }
+      if (filterValue === "complete" && item.completed === true) {
+        return { ...item };
+      } else if (filterValue === "active" && item.completed === false) {
+        return { ...item };
+      } else if (filterValue === "all") {
         return { ...item };
       }
     });
     return filterArray;
   };
 
-  const filterArr = React.useMemo(() => {
-    return handleFilterArray(filterTodos);
+  const arrayFiltresTodos = React.useMemo(() => {
+    return handleFilterArray(valueForFilter);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterTodos]);
+  }, [arrayTodos, valueForFilter]);
+  console.log(arrayFiltresTodos)
 
-  const handleDeleteTodo = (id) => {
-    const resultArr = [...arrayTodos].filter((item) => item.id !== id);
-    setArrayTodos(resultArr);
+  const filterTodos = React.useMemo(() => {
+    localStorage.setItem("filterTodos", JSON.stringify(arrayFiltresTodos));
+    return JSON.parse(localStorage.getItem('filterTodos'))
+  }, [arrayFiltresTodos])
+
+  const handleChangeRemoveTodo = (todoId, nameButton) => {
+    const newTodoList = [...arrayTodos];
+    const todoIndex = newTodoList.findIndex((todo) => todo.id === todoId);
+    if (todoIndex === -1) {
+      return;
+    }
+    if (nameButton === 'completed') {
+      return newTodoList[todoIndex].complete = !newTodoList[todoIndex].complete;
+    } else if (nameButton === 'delete') {
+      console.log(nameButton, todoIndex, newTodoList)
+      newTodoList.splice(todoIndex, 1)
+      console.log(newTodoList)
+      return newTodoList
+    }
+    setArrayTodos(newTodoList);
+ 
+  };
+
+  const createTodoElement = (text) => {
+    setArrayTodos((prevsTate) => ([
+      ...prevsTate,
+      { title: text, completed: false, id: uuidv4() },
+    ]));
   };
 
   const handleEditTodo = (id, e) => {
@@ -83,7 +82,6 @@ const App = () => {
       ...item,
       complete: true,
     }));
-    console.log(resultArr);
     setArrayTodos(resultArr);
   };
 
@@ -94,14 +92,13 @@ const App = () => {
         createTodoElement={createTodoElement}
       />
       <TodoLists
-        onCompleteTodo={handleCompleteTodo}
-        onDeleteTodo={handleDeleteTodo}
-        onArrayTodos={filterArr}
+        onChangeRemoveTodo={handleChangeRemoveTodo}
+        arrayTodos={filterTodos}
         onEditTodo={handleEditTodo}
       />
       <Footer
-        onArrayLength={arrayTodos.length}
-        onComplitetedCounterValue={handleCompletedCounterValue}
+        array={arrayTodos}
+        completetedCounterValue={setValueForFilter.countComplete}
         onFilterArray={handleFilterArray}
       />
     </>

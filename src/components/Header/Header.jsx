@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "./Header.module.css";
+import StyledHeader  from "./Header.style.js";
 
 import checked from "./images/checkMark.png";
 
@@ -23,19 +23,19 @@ const Header = (props) => {
   };
 
   return (
-    <header className={styles.header}>
+  
+    <StyledHeader >
       <button onClick={props.onCompletedTodoAll}>
-        <img className={styles.headerImage} src={checked} alt="" />
+        <img className="header__image" src={checked} alt="" />
       </button>
       <input
-        className={styles.headerInput}
-        type="text"
+        className="header__input"
         value={todoTitle}
         placeholder="What needs to be done?"
         onKeyUp={handleValidateGetTodoTitle}
         onChange={handleSetTitle}
       />
-    </header>
+    </StyledHeader>
   );
 };
 export default Header;

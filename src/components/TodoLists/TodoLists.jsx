@@ -1,22 +1,21 @@
 import React from "react";
 
+import StyledTodoLists from "./TodoLists.style";
 import ListItem from "../ListItem";
-
-import styles from "./TodoLists.module.css";
 
 const TodoLists = (props) => {
   return (
-    <ul className={styles.todosBlock}>
-      {props.onArrayTodos.map((item) => (
+    <StyledTodoLists>
+      {props.arrayTodos.map((item) => (
         <ListItem
           key={item.id}
           todo={item}
-          onComplete={props.onCompleteTodo}
-          onDelete={props.onDeleteTodo}
+          onChangeRemoveTodo={props.onChangeRemoveTodo}
+          
           onEditTodo={props.onEditTodo}
         />
       ))}
-    </ul>
+    </StyledTodoLists>
   );
 };
 

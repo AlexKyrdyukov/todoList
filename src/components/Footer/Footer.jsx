@@ -1,42 +1,43 @@
 import React from "react";
 
-import styles from "./Footer.module.css";
+import StyledFooter from "./Footer.styles";
 
 const Footer = (props) => {
-  return (
-    props.onArrayLength > 0 && (
-      <footer className={styles.footerBlock}>
-        <span className={styles.infoTable}>
-          Complete: {props.onComplitetedCounterValue}
-        </span>
 
-        {stateButton.map((item, index) => {
-          return (
-            <button
-              key={index}
-              className={styles.footerButton}
-              onClick={() => props.onFilterArray(item.key)}
-            >
-              {item.value}
-            </button>
-          );
-        })}
-      </footer>
-    )
+  if (!props.array.length) {
+    return null;
+  }
+
+  return (
+    <StyledFooter>
+      <span className="info__table">
+        Complete: {props.completetedCounterValue}
+      </span>
+
+      {filterButtons.map((item) => (
+        <button
+          key={item.value}
+          className="footer__button-status"
+          onClick={() => props.onFilterArray(item.value)}
+        >
+          {item.status}
+        </button>
+      ))}
+    </StyledFooter>
   );
 };
 
-const stateButton = [
+const filterButtons = [
   {
-    key: "all",
+    status: "all",
     value: "all",
   },
   {
-    key: "active",
+    status: "active",
     value: "active",
   },
   {
-    key: "complete",
+    status: "complete",
     value: "complete",
   },
 ];
