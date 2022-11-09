@@ -23,4 +23,14 @@ export default styled.header`
       opacity: 1;
     }
   }
+  .header__button {
+    border: 0.5px solid black;
+    padding: 3px;
+    border-radius: 4.5px;
+    transition: 0.6s;
+    :hover {
+      background: #ff1493;
+      color: white;
+    }
+  }
 `;

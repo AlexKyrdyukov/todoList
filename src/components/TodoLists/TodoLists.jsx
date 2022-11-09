@@ -11,7 +11,6 @@ const TodoLists = (props) => {
           key={item.id}
           todo={item}
           onChangeRemoveTodo={props.onChangeRemoveTodo}
-          
           onEditTodo={props.onEditTodo}
         />
       ))}

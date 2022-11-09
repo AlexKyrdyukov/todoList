@@ -7,23 +7,23 @@ import Footer from "./components/Footer";
 import TodoLists from "./components/TodoLists";
 
 const App = () => {
-
   const [arrayTodos, setArrayTodos] = React.useState(
     JSON.parse(localStorage.getItem("todos")) || []
   );
+
   const [valueForFilter, setValueForFilter] = React.useState("all");
   React.useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(arrayTodos));
   }, [arrayTodos]);
 
   const handleFilterArray = (filterValue) => {
-    setValueForFilter(filterValue)
-    setValueForFilter.countComplete = 0
+    setValueForFilter(filterValue);
+    setValueForFilter.countComplete = 0;
     const filterArray = [...arrayTodos].filter((item) => {
-      if (item.complete) {
-        setValueForFilter.countComplete++
+      if (item.completed) {
+        setValueForFilter.countComplete++;
       }
-      if (filterValue === "complete" && item.completed === true) {
+      if (filterValue === "completed" && item.completed === true) {
         return { ...item };
       } else if (filterValue === "active" && item.completed === false) {
         return { ...item };
@@ -34,57 +34,58 @@ const App = () => {
     return filterArray;
   };
 
-  const arrayFiltresTodos = React.useMemo(() => {
-    return handleFilterArray(valueForFilter);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [arrayTodos, valueForFilter]);
-  console.log(arrayFiltresTodos)
-
-  const filterTodos = React.useMemo(() => {
-    localStorage.setItem("filterTodos", JSON.stringify(arrayFiltresTodos));
-    return JSON.parse(localStorage.getItem('filterTodos'))
-  }, [arrayFiltresTodos])
-
   const handleChangeRemoveTodo = (todoId, nameButton) => {
     const newTodoList = [...arrayTodos];
     const todoIndex = newTodoList.findIndex((todo) => todo.id === todoId);
     if (todoIndex === -1) {
       return;
     }
-    if (nameButton === 'completed') {
-      return newTodoList[todoIndex].complete = !newTodoList[todoIndex].complete;
-    } else if (nameButton === 'delete') {
-      console.log(nameButton, todoIndex, newTodoList)
-      newTodoList.splice(todoIndex, 1)
-      console.log(newTodoList)
-      return newTodoList
+    if (nameButton === "completed") {
+      return (
+        (newTodoList[todoIndex].completed = !newTodoList[todoIndex].completed),
+        setArrayTodos(newTodoList)
+      );
     }
-    setArrayTodos(newTodoList);
- 
+    if (nameButton === "delete") {
+      newTodoList.splice(todoIndex, 1);
+      return setArrayTodos(newTodoList);
+    }
   };
+
+  const arrayFiltresTodos = React.useMemo(() => {
+    return handleFilterArray(valueForFilter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [arrayTodos, valueForFilter]);
+
+  const filterTodos = React.useMemo(() => {
+    localStorage.setItem("filterTodos", JSON.stringify(arrayFiltresTodos));
+    return JSON.parse(localStorage.getItem("filterTodos"));
+  }, [arrayFiltresTodos]);
 
   const createTodoElement = (text) => {
-    setArrayTodos((prevsTate) => ([
+    setArrayTodos((prevsTate) => [
       ...prevsTate,
       { title: text, completed: false, id: uuidv4() },
-    ]));
+    ]);
   };
 
-  const handleEditTodo = (id, e) => {
-    const resultArr = [...arrayTodos].map((item) =>
-      item.id === id ? { ...item, title: e.target.value } : { ...item }
-    );
+  const handleEditTodo = (id, text) => {
+    const resultArr = [...arrayTodos];
+    const indexElem = resultArr.findIndex((item) => item.id === id);
+    console.log(resultArr[indexElem].title, text);
+    resultArr[indexElem].title = text;
+
     setArrayTodos(resultArr);
   };
 
   const handleCompleteTodoAll = () => {
     const resultArr = [...arrayTodos].map((item) => ({
       ...item,
-      complete: true,
+      completed: true,
     }));
     setArrayTodos(resultArr);
   };
-
+  console.log();
   return (
     <>
       <Header

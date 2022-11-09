@@ -3,7 +3,6 @@ import React from "react";
 import StyledFooter from "./Footer.styles";
 
 const Footer = (props) => {
-
   if (!props.array.length) {
     return null;
   }
@@ -11,7 +10,7 @@ const Footer = (props) => {
   return (
     <StyledFooter>
       <span className="info__table">
-        Complete: {props.completetedCounterValue}
+        Completed: {props.completetedCounterValue}
       </span>
 
       {filterButtons.map((item) => (
@@ -37,8 +36,8 @@ const filterButtons = [
     value: "active",
   },
   {
-    status: "complete",
-    value: "complete",
+    status: "completed",
+    value: "completed",
   },
 ];
 export default Footer;

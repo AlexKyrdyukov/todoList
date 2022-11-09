@@ -1,6 +1,6 @@
 import React from "react";
 
-import StyledHeader  from "./Header.style.js";
+import StyledHeader from "./Header.style.js";
 
 import checked from "./images/checkMark.png";
 
@@ -8,8 +8,9 @@ const Header = (props) => {
   const [todoTitle, setTodoTitle] = React.useState("");
 
   const handleValidateGetTodoTitle = (e) => {
-    if (e.key === "Enter") {
-      if (!e.target.value.trim()) {
+    console.log(e);
+    if (e.key === "Enter" || (e.button === 0 && e.type === "click")) {
+      if (!todoTitle.trim()) {
         setTodoTitle("");
         return;
       }
@@ -23,8 +24,7 @@ const Header = (props) => {
   };
 
   return (
-  
-    <StyledHeader >
+    <StyledHeader>
       <button onClick={props.onCompletedTodoAll}>
         <img className="header__image" src={checked} alt="" />
       </button>
@@ -35,6 +35,9 @@ const Header = (props) => {
         onKeyUp={handleValidateGetTodoTitle}
         onChange={handleSetTitle}
       />
+      <button className="header__button" onClick={handleValidateGetTodoTitle}>
+        Add
+      </button>
     </StyledHeader>
   );
 };
