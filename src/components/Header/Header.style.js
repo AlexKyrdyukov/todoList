@@ -13,6 +13,7 @@ export default styled.header`
     color: black;
     padding: 10px 20px;
     padding-right: 0px;
+    max-width: 230px;
   }
   .header__image {
     width: 20px;

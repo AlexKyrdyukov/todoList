@@ -74,7 +74,6 @@ const App = () => {
     const indexElem = resultArr.findIndex((item) => item.id === id);
     console.log(resultArr[indexElem].title, text);
     resultArr[indexElem].title = text;
-
     setArrayTodos(resultArr);
   };
 

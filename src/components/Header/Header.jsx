@@ -8,7 +8,6 @@ const Header = (props) => {
   const [todoTitle, setTodoTitle] = React.useState("");
 
   const handleValidateGetTodoTitle = (e) => {
-    console.log(e);
     if (e.key === "Enter" || (e.button === 0 && e.type === "click")) {
       if (!todoTitle.trim()) {
         setTodoTitle("");
