@@ -1,5 +1,5 @@
 import React from "react";
-
+import {createTodo} from "../../reduxStore/selectors.js";
 import StyledHeader from "./Header.style.js";
 
 import checked from "./images/checkMark.png";
@@ -7,21 +7,19 @@ import checked from "./images/checkMark.png";
 const Header = (props) => {
   const [todoTitle, setTodoTitle] = React.useState("");
 
-  const handleValidateGetTodoTitle = (e) => {
-    if (e.key === "Enter" || (e.button === 0 && e.type === "click")) {
-      if (!todoTitle.trim()) {
-        setTodoTitle("");
-        return;
-      }
-      props.createTodoElement(todoTitle.trim());
-      setTodoTitle("");
+  const handleGetString = (e) => {
+    setTodoTitle(e.target.value)
+  }
+  const handleSetString = (e) => {
+    if (e.button === 0 || e.key === 'Enter') {
+    if (!todoTitle.trim()) {
+      setTodoTitle('')
+      return
     }
-  };
-
-  const handleSetTitle = (e) => {
-    setTodoTitle(e.target.value);
-  };
-
+      setTodoTitle('')
+      createTodo(todoTitle)
+    }
+  }
   return (
     <StyledHeader>
       <button onClick={props.onCompletedTodoAll}>
@@ -31,10 +29,10 @@ const Header = (props) => {
         className="header__input"
         value={todoTitle}
         placeholder="What needs to be done?"
-        onKeyUp={handleValidateGetTodoTitle}
-        onChange={handleSetTitle}
+        onKeyUp={handleSetString}
+        onChange={handleGetString}
       />
-      <button className="header__button" onClick={handleValidateGetTodoTitle}>
+      <button className="header__button" onClick={handleSetString}>
         Add
       </button>
     </StyledHeader>

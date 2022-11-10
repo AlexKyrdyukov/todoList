@@ -1,9 +1,9 @@
 import React from "react";
 
 import StyledFooter from "./Footer.styles";
-
+import  {arrayTodos }from "../../reduxStore/store";
 const Footer = (props) => {
-  if (!props.array.length) {
+  if (!arrayTodos.length) {
     return null;
   }
 
