@@ -1,12 +1,13 @@
 import React from "react";
 import {createTodo} from "../../reduxStore/selectors.js";
 import StyledHeader from "./Header.style.js";
-
+import {useDispatch} from 'react-redux';
 import checked from "./images/checkMark.png";
+import { actionCreateTodo } from "../../reduxStore/store.js";
 
 const Header = (props) => {
   const [todoTitle, setTodoTitle] = React.useState("");
-
+  const dispatch = useDispatch()
   const handleGetString = (e) => {
     setTodoTitle(e.target.value)
   }
@@ -17,7 +18,8 @@ const Header = (props) => {
       return
     }
       setTodoTitle('')
-      createTodo(todoTitle)
+dispatch(actionCreateTodo(todoTitle))
+      // createTodo(todoTitle)
     }
   }
   return (

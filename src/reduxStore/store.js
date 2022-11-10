@@ -1,8 +1,19 @@
 // import Header from "../components/Header/Header";
 import { v4 as uuidv4 } from "uuid";
-export let arrayTodos = JSON.parse(localStorage.getItem("todos")) || [];
+export const arrayTodos = JSON.parse(localStorage.getItem("todos")) || [];
 
-export const reducer = (state = arrayTodos, action) => {
+const initialState = {
+  todos: arrayTodos,
+}
+
+export const actionCreateTodo = (value) => {
+  return {
+    type: 'CREATE_TODO',
+    value
+  }
+}
+
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "COMPLETE_TODO":
       return;
@@ -11,16 +22,15 @@ export const reducer = (state = arrayTodos, action) => {
     case "ACTION_TODO":
       return;
     case "CREATE_TODO":
-      if (action.value) {
-        arrayTodos = [
-          ...arrayTodos,
-          { title: action.value, completed: false, id: uuidv4() },
-        ];
-        localStorage.setItem("todos", JSON.stringify(arrayTodos));
-        return (state = [...arrayTodos]);
-      }
-      break;
-
+      return {
+        ...state,
+        todos: [...state.todos, {
+          complete: false,
+          id: uuidv4(),
+          
+          title: action.value
+        }]
+      };
     default:
       return state;
   }
