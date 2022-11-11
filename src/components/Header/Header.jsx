@@ -1,30 +1,42 @@
 import React from "react";
-import {createTodo} from "../../reduxStore/selectors.js";
-import StyledHeader from "./Header.style.js";
-import {useDispatch} from 'react-redux';
-import checked from "./images/checkMark.png";
-import { actionCreateTodo } from "../../reduxStore/store.js";
+import { useDispatch } from 'react-redux';
 
-const Header = (props) => {
+import StyledHeader from "./Header.style.js";
+import checked from "./images/checkMark.png";
+import {
+  actionChangeTodos,
+  actionCreateTodo,
+} from "../../reduxStore/store.js";
+
+const Header = () => {
+
   const [todoTitle, setTodoTitle] = React.useState("");
   const dispatch = useDispatch()
-  const handleGetString = (e) => {
-    setTodoTitle(e.target.value)
+
+  const handleNewTodoInputChange = (ev) => {
+    setTodoTitle(ev.target.value)
   }
+
   const handleSetString = (e) => {
     if (e.button === 0 || e.key === 'Enter') {
+      return;
+    }
+
     if (!todoTitle.trim()) {
       setTodoTitle('')
       return
     }
-      setTodoTitle('')
-dispatch(actionCreateTodo(todoTitle))
-      // createTodo(todoTitle)
-    }
+    dispatch(actionCreateTodo(todoTitle))
+    setTodoTitle('')
   }
+
+  const changeTodosStatus = () => {
+    dispatch(actionChangeTodos())
+  }
+
   return (
     <StyledHeader>
-      <button onClick={props.onCompletedTodoAll}>
+      <button onClick={changeTodosStatus}>
         <img className="header__image" src={checked} alt="" />
       </button>
       <input
@@ -32,7 +44,7 @@ dispatch(actionCreateTodo(todoTitle))
         value={todoTitle}
         placeholder="What needs to be done?"
         onKeyUp={handleSetString}
-        onChange={handleGetString}
+        onChange={handleNewTodoInputChange}
       />
       <button className="header__button" onClick={handleSetString}>
         Add
@@ -40,4 +52,5 @@ dispatch(actionCreateTodo(todoTitle))
     </StyledHeader>
   );
 };
+
 export default Header;

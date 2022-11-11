@@ -15,6 +15,7 @@ export default styled.header`
     padding-right: 0px;
     max-width: 230px;
   }
+
   .header__image {
     width: 20px;
     height: 20px;
@@ -24,11 +25,13 @@ export default styled.header`
       opacity: 1;
     }
   }
+
   .header__button {
     border: 0.5px solid black;
     padding: 3px;
     border-radius: 4.5px;
     transition: 0.6s;
+
     :hover {
       background: #ff1493;
       color: white;
