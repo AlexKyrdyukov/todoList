@@ -1,28 +1,30 @@
 import React from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
-import { actionChangeStatusTodo, actionChangeTodoText, actionDeleteTodo } from "../../reduxStore/store";
+import {
+  actionChangeStatusTodo,
+  actionChangeTodoText,
+  actionDeleteTodo,
+} from "../../reduxStore/reducer";
 import StyledListItem from "./ListItem.style";
 
 const ListItem = (props) => {
   //
   const [inputState, setInputState] = React.useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const deleteTodo = (todoId) => {
-    dispatch(actionDeleteTodo(todoId))
-  }
+    dispatch(actionDeleteTodo(todoId));
+  };
 
   const changeStatus = (todoId) => {
-    dispatch(actionChangeStatusTodo(todoId))
-  }
+    dispatch(actionChangeStatusTodo(todoId));
+  };
 
   const changeTodoText = (text, todo) => {
-    const todoTitle = todo.title
-    const todoId = todo.id
-    dispatch(actionChangeTodoText(text, todoId, todoTitle))
-  }
+    dispatch(actionChangeTodoText({ text, todo }));
+  };
 
   return (
     <StyledListItem isComplete={props.todo.completed}>
@@ -38,7 +40,7 @@ const ListItem = (props) => {
           type="text"
           value={props.todo.title}
           onBlur={() => setInputState((prevValue) => !prevValue)}
-          onChange={(e) => changeTodoText(e.target.value, props.todo)}
+          onChange={(ev) => changeTodoText(ev.target.value, props.todo)}
         />
       ) : (
         <div

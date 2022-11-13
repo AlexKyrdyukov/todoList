@@ -1,47 +1,55 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import StyledFooter from "./Footer.styles";
-import { actionFilterTodo, } from "../../reduxStore/store";
-import { actionDeleteCompleteTodos } from "../../reduxStore/store";
+import {
+  actionDeleteCompleteTodos,
+  actionFilterTodo,
+} from "../../reduxStore/reducer";
 
 const Footer = () => {
-  const todos = useSelector(({ todos }) => todos)
-  const filter = useSelector(({ filter }) => filter)
+  const todos = useSelector(({ todos }) => todos);
+  const filter = useSelector(({ filter }) => filter);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const filterTodos = (filter) => {
-    if (filter === 'delete') {
-      return dispatch(actionDeleteCompleteTodos())
-    }
-    dispatch(actionFilterTodo(filter))
-  }
+    dispatch(actionFilterTodo(filter));
+  };
 
   const counterCompleted = todos.reduce((accum, item) => {
-    return (item.completed ? accum += 1 : accum);
-  }, 0)
+    return item.completed ? (accum += 1) : accum;
+  }, 0);
 
+  const handleDeleteCompletedTodods = () => {
+    return dispatch(actionDeleteCompleteTodos());
+  };
   if (!todos.length) {
     return null;
   }
 
   return (
-    <StyledFooter>
-      <span className="info__table">
-        Compl:{counterCompleted}
-      </span>
-
+    <StyledFooter filter={filter}>
+      <span className="info__table">Compl:{counterCompleted}</span>
       {filterButtons.map((item) => (
         <button
           key={item.value}
-          className="footer__button-status"
+          className={
+            item.value === filter
+              ? "footer__block-button-in-focus"
+              : "footer__block-button-status"
+          }
           onClick={() => filterTodos(item.value)}
         >
           {item.status}
         </button>
       ))}
+      <button
+        className="footer__button-delete-todos"
+        onClick={handleDeleteCompletedTodods}
+      >
+        delete
+      </button>
     </StyledFooter>
   );
 };
@@ -59,9 +67,5 @@ const filterButtons = [
     status: "completed",
     value: "completed",
   },
-  {
-    status: 'delete',
-    value: 'delete'
-  }
 ];
 export default Footer;

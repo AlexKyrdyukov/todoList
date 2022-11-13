@@ -5,7 +5,7 @@ import { store } from "./reduxStore/createStore";
 
 import App from "./App";
 
-import GlobalStyles from "./globalStyles/global.js";
+import GlobalStyles from "./globalStyles/globalStyles.js";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

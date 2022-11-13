@@ -4,31 +4,26 @@ import { useSelector } from "react-redux";
 import StyledTodoLists from "./TodoLists.style";
 import ListItem from "../ListItem";
 
-const TodoLists = (props) => {
-  const state = useSelector((state) => state);
-  localStorage.setItem("todos", JSON.stringify(state.todos));
-
-  const filter = state.filter;
+const TodoLists = () => {
+  const arrayTodos = useSelector(({ todos }) => todos);
+  const filter = useSelector(({ filter }) => filter);
 
   const resultArr = React.useMemo(() => {
+    localStorage.setItem("todos", JSON.stringify(arrayTodos));
+
     if (filter === "all") {
-      return [...state.todos];
+      return arrayTodos;
     }
     if (filter === "completed") {
-      return [...state.todos].filter((item) => item.completed);
+      return arrayTodos.filter((item) => item.completed);
     }
-    return [...state.todos].filter((item) => !item.completed);
-  }, [filter, state]);
+    return arrayTodos.filter((item) => !item.completed);
+  }, [filter, arrayTodos]);
 
   return (
     <StyledTodoLists>
       {resultArr.map((item) => (
-        <ListItem
-          key={item.id}
-          todo={item}
-          onChangeRemoveTodo={props.onChangeRemoveTodo}
-          onEditTodo={props.onEditTodo}
-        />
+        <ListItem key={item.id} todo={item} />
       ))}
     </StyledTodoLists>
   );
