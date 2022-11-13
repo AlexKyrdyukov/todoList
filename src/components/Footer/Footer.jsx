@@ -2,10 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import StyledFooter from "./Footer.styles";
+// import {
+//   actionDeleteCompleteTodos,
+//   actionFilterTodo,
+// } from "../../reduxStore/reducer";
 import {
-  actionDeleteCompleteTodos,
-  actionFilterTodo,
-} from "../../reduxStore/reducer";
+  deleteAllCompleteTodos,
+  filterTodo,
+} from "../../reduxStore/mainReduxToolkit/reducer";
 
 const Footer = () => {
   const todos = useSelector(({ todos }) => todos);
@@ -14,7 +18,7 @@ const Footer = () => {
   const dispatch = useDispatch();
 
   const filterTodos = (filter) => {
-    dispatch(actionFilterTodo(filter));
+    dispatch(filterTodo(filter));
   };
 
   const counterCompleted = todos.reduce((accum, item) => {
@@ -22,7 +26,7 @@ const Footer = () => {
   }, 0);
 
   const handleDeleteCompletedTodods = () => {
-    return dispatch(actionDeleteCompleteTodos());
+    return dispatch(deleteAllCompleteTodos());
   };
   if (!todos.length) {
     return null;

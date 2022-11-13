@@ -3,10 +3,15 @@ import { useDispatch } from "react-redux";
 
 import StyledHeader from "./Header.style.js";
 import checked from "./images/checkMark.png";
+// import {
+//   actionChangeTodos,
+//   actionCreateTodo,
+// } from "../../reduxStore/reducer.js";
 import {
-  actionChangeTodos,
-  actionCreateTodo,
-} from "../../reduxStore/reducer.js";
+  changeStatusAllTodos,
+  createTodo,
+  store,
+} from "../../reduxStore/mainReduxToolkit/reducer.js";
 
 const Header = () => {
   const [todoTitle, setTodoTitle] = React.useState("");
@@ -27,12 +32,12 @@ const Header = () => {
     ) {
       return;
     }
-    dispatch(actionCreateTodo(todoTitle));
+    dispatch(createTodo(todoTitle));
     setTodoTitle("");
   };
 
   const changeTodosStatus = () => {
-    dispatch(actionChangeTodos());
+    dispatch(changeStatusAllTodos());
   };
 
   return (

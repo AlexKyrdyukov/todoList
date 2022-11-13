@@ -1,11 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-
 import {
-  actionChangeStatusTodo,
-  actionChangeTodoText,
-  actionDeleteTodo,
-} from "../../reduxStore/reducer";
+  changeStatusTodo,
+  changeTodoText,
+  deleteCompletedTodo,
+} from "../../reduxStore/mainReduxToolkit/reducer";
+
+// import {
+//   actionChangeStatusTodo,
+//   actionChangeTodoText,
+//   actionDeleteTodo,
+// } from "../../reduxStore/reducer";
 import StyledListItem from "./ListItem.style";
 
 const ListItem = (props) => {
@@ -14,22 +19,22 @@ const ListItem = (props) => {
 
   const dispatch = useDispatch();
 
-  const deleteTodo = (todoId) => {
-    dispatch(actionDeleteTodo(todoId));
+  const handleDeleteTodo = (todoId) => {
+    dispatch(deleteCompletedTodo(todoId));
   };
 
-  const changeStatus = (todoId) => {
-    dispatch(actionChangeStatusTodo(todoId));
+  const handleChangeStatus = (todoId) => {
+    dispatch(changeStatusTodo(todoId));
   };
 
-  const changeTodoText = (text, todo) => {
-    dispatch(actionChangeTodoText({ text, todo }));
+  const handleChangeTodoText = (text, todo) => {
+    dispatch(changeTodoText({ text, todo }));
   };
 
   return (
     <StyledListItem isComplete={props.todo.completed}>
       <button
-        onClick={() => changeStatus(props.todo.id)}
+        onClick={() => handleChangeStatus(props.todo.id)}
         className="button__complete"
       >
         completed
@@ -40,7 +45,7 @@ const ListItem = (props) => {
           type="text"
           value={props.todo.title}
           onBlur={() => setInputState((prevValue) => !prevValue)}
-          onChange={(ev) => changeTodoText(ev.target.value, props.todo)}
+          onChange={(ev) => handleChangeTodoText(ev.target.value, props.todo)}
         />
       ) : (
         <div
@@ -51,7 +56,7 @@ const ListItem = (props) => {
         </div>
       )}
       <button
-        onClick={() => deleteTodo(props.todo.id)}
+        onClick={() => handleDeleteTodo(props.todo.id)}
         className="button__delete"
       >
         delete
