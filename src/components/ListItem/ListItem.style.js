@@ -13,6 +13,7 @@ export default styled.li`
     border-radius: 2px;
     padding: 10px;
     transition: 0.4s;
+
     :hover {
       background-color: rgb(0, 112, 99);
       padding: 10px;
@@ -44,6 +45,7 @@ export default styled.li`
     padding: 10px;
     background-color: ${(props) => (props.isComplete ? "greenyellow" : "")};
     color: ${(props) => (props.isComplete ? "blue" : "")};
+
     :hover {
       background-color: ${(props) => (props.isComplete ? "" : "green")};
     }

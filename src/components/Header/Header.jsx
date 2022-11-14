@@ -1,43 +1,35 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import StyledHeader from "./Header.style.js";
+import StyledHeader from "./Header.style";
+import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice";
 import checked from "./images/checkMark.png";
-// import {
-//   actionChangeTodos,
-//   actionCreateTodo,
-// } from "../../reduxStore/reducer.js";
-import {
-  changeStatusAllTodos,
-  createTodo,
-  store,
-} from "../../reduxStore/mainReduxToolkit/reducer.js";
 
 const Header = () => {
   const [todoTitle, setTodoTitle] = React.useState("");
   const dispatch = useDispatch();
-
-  const handleSetTodo = (ev) => {
+  const handleNewTodoInputChange = (ev) => {
     setTodoTitle(ev.target.value);
   };
 
-  const handleSetString = (ev) => {
+  const handleKeyUp = (ev) => {
+    if (ev.key !== "Enter") {
+      return;
+    }
+    handleCreateTodo();
+  };
+
+  const handleCreateTodo = () => {
     if (!todoTitle.trim()) {
       setTodoTitle("");
       return;
     }
-    if (
-      (ev.button !== 0 && ev.type === "click") ||
-      (ev.key !== "Enter" && ev.type === "keyup")
-    ) {
-      return;
-    }
-    dispatch(createTodo(todoTitle));
+    dispatch(todosSliceActions.createTodo(todoTitle));
     setTodoTitle("");
   };
 
   const changeTodosStatus = () => {
-    dispatch(changeStatusAllTodos());
+    dispatch(todosSliceActions.changeStatusAllTodos());
   };
 
   return (
@@ -49,10 +41,10 @@ const Header = () => {
         className="header__input"
         value={todoTitle}
         placeholder="What needs to be done?"
-        onKeyUp={handleSetString}
-        onChange={handleSetTodo}
+        onKeyUp={handleKeyUp}
+        onChange={handleNewTodoInputChange}
       />
-      <button className="header__button" onClick={handleSetString}>
+      <button className="header__button" onClick={handleCreateTodo}>
         Add
       </button>
     </StyledHeader>

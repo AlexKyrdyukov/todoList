@@ -21,6 +21,7 @@ export default styled.header`
     height: 20px;
     background-color: rgba(255, 255, 255, 0.973);
     opacity: 0.6;
+
     :hover {
       opacity: 1;
     }

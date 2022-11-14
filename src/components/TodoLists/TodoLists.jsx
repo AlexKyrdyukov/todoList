@@ -3,26 +3,14 @@ import { useSelector } from "react-redux";
 
 import StyledTodoLists from "./TodoLists.style";
 import ListItem from "../ListItem";
-
+import { selectFilter } from "../../reduxStore/mainReduxToolkit/selector";
 const TodoLists = () => {
-  const arrayTodos = useSelector(({ todos }) => todos);
-  const filter = useSelector(({ filter }) => filter);
+  const filterArrayTodos = useSelector(selectFilter);
 
-  const resultArr = React.useMemo(() => {
-    localStorage.setItem("todos", JSON.stringify(arrayTodos));
-
-    if (filter === "all") {
-      return arrayTodos;
-    }
-    if (filter === "completed") {
-      return arrayTodos.filter((item) => item.completed);
-    }
-    return arrayTodos.filter((item) => !item.completed);
-  }, [filter, arrayTodos]);
 
   return (
     <StyledTodoLists>
-      {resultArr.map((item) => (
+      {filterArrayTodos.map((item) => (
         <ListItem key={item.id} todo={item} />
       ))}
     </StyledTodoLists>

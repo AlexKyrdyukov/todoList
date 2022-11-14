@@ -18,11 +18,13 @@ export default styled.footer`
     border: 1px solid black;
     border-radius: 2px;
     padding: 3px 5px;
+    
     :hover {
       color: black;
       background: #6fc6ff;
     }
   }
+
   .footer__block-button-in-focus {
     color: red;
     background: #55acee;
@@ -31,6 +33,7 @@ export default styled.footer`
     border: 1px solid red;
     border-radius: 2px;
     padding: 3px 5px;
+
     :hover {
       color: black;
       background: #6fc6ff;
@@ -45,14 +48,17 @@ export default styled.footer`
     border: 1px solid black;
     border-radius: 2px;
     padding: 3px 5px;
+
     :hover {
       color: black;
       background: #6fc6ff;
     }
   }
+
   .info__table {
     border: 0.3px solid black;
     background-color: rgba(28, 46, 126, 0.267);
     padding: 3px 3px;
+    font-size: 12px;
   }
 `;

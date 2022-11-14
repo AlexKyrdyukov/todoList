@@ -2,39 +2,34 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import StyledFooter from "./Footer.styles";
-// import {
-//   actionDeleteCompleteTodos,
-//   actionFilterTodo,
-// } from "../../reduxStore/reducer";
-import {
-  deleteAllCompleteTodos,
-  filterTodo,
-} from "../../reduxStore/mainReduxToolkit/reducer";
+
+import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice";
+import { selectFilter } from "../../reduxStore/mainReduxToolkit/selector";
 
 const Footer = () => {
-  const todos = useSelector(({ todos }) => todos);
+  const arrayTodos = useSelector(({ todos }) => todos);
   const filter = useSelector(({ filter }) => filter);
-
+  const filterArrayTodos = useSelector(selectFilter);
+  console.log(filterArrayTodos);
   const dispatch = useDispatch();
+  React.useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(arrayTodos));
+  }, [arrayTodos]);
 
-  const filterTodos = (filter) => {
-    dispatch(filterTodo(filter));
+  const handleFilterTodos = (ev) => {
+    dispatch(todosSliceActions.filterTodo(ev.target.textContent));
   };
 
-  const counterCompleted = todos.reduce((accum, item) => {
-    return item.completed ? (accum += 1) : accum;
-  }, 0);
-
-  const handleDeleteCompletedTodods = () => {
-    return dispatch(deleteAllCompleteTodos());
+  const handleDeleteCompletedTodos = () => {
+    dispatch(todosSliceActions.deleteAllCompleteTodos());
   };
-  if (!todos.length) {
+  if (!arrayTodos.length) {
     return null;
   }
 
   return (
-    <StyledFooter filter={filter}>
-      <span className="info__table">Compl:{counterCompleted}</span>
+    <StyledFooter>
+      <span className="info__table">Completed: {selectFilter.counter}</span>
       {filterButtons.map((item) => (
         <button
           key={item.value}
@@ -43,14 +38,14 @@ const Footer = () => {
               ? "footer__block-button-in-focus"
               : "footer__block-button-status"
           }
-          onClick={() => filterTodos(item.value)}
+          onClick={handleFilterTodos}
         >
           {item.status}
         </button>
       ))}
       <button
         className="footer__button-delete-todos"
-        onClick={handleDeleteCompletedTodods}
+        onClick={handleDeleteCompletedTodos}
       >
         delete
       </button>

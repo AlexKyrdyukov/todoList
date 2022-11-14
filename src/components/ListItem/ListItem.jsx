@@ -1,62 +1,55 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  changeStatusTodo,
-  changeTodoText,
-  deleteCompletedTodo,
-} from "../../reduxStore/mainReduxToolkit/reducer";
 
-// import {
-//   actionChangeStatusTodo,
-//   actionChangeTodoText,
-//   actionDeleteTodo,
-// } from "../../reduxStore/reducer";
+import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice";
+
 import StyledListItem from "./ListItem.style";
 
 const ListItem = (props) => {
-  //
   const [inputState, setInputState] = React.useState(false);
 
   const dispatch = useDispatch();
 
-  const handleDeleteTodo = (todoId) => {
-    dispatch(deleteCompletedTodo(todoId));
+  const handleDeleteTodo = () => {
+    dispatch(todosSliceActions.deleteCompletedTodo(props.todo.id));
   };
 
-  const handleChangeStatus = (todoId) => {
-    dispatch(changeStatusTodo(todoId));
+  const handleChangeStatus = () => {
+    dispatch(todosSliceActions.changeStatusTodo(props.todo.id));
   };
 
-  const handleChangeTodoText = (text, todo) => {
-    dispatch(changeTodoText({ text, todo }));
+  const handleChangeTodoText = (ev) => {
+    dispatch(todosSliceActions.changeTodoText({text: ev.target.value, id: props.todo.id} ));
   };
 
   return (
     <StyledListItem isComplete={props.todo.completed}>
       <button
-        onClick={() => handleChangeStatus(props.todo.id)}
+        onClick={handleChangeStatus}
         className="button__complete"
       >
         completed
       </button>
-      {inputState ? (
-        <input
-          className="input__block"
-          type="text"
-          value={props.todo.title}
-          onBlur={() => setInputState((prevValue) => !prevValue)}
-          onChange={(ev) => handleChangeTodoText(ev.target.value, props.todo)}
-        />
-      ) : (
-        <div
-          className="title__block"
-          onDoubleClick={() => setInputState((prevValue) => !prevValue)}
-        >
-          {props.todo.title}
-        </div>
-      )}
+      {inputState
+        ? (
+          <input
+            className="input__block"
+            type="text"
+            value={props.todo.title}
+            onBlur={() => setInputState((prevValue) => !prevValue)}
+            onChange={handleChangeTodoText}
+          />
+        )
+        : (
+          <div
+            className="title__block"
+            onDoubleClick={() => setInputState((prevValue) => !prevValue)}
+          >
+            {props.todo.title}
+          </div>
+        )}
       <button
-        onClick={() => handleDeleteTodo(props.todo.id)}
+        onClick={handleDeleteTodo}
         className="button__delete"
       >
         delete
