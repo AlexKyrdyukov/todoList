@@ -1,13 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import StyledHeader from "./Header.style";
 import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice";
+
+import StyledHeader from "./Header.style";
+
 import checked from "./images/checkMark.png";
 
 const Header = () => {
   const [todoTitle, setTodoTitle] = React.useState("");
   const dispatch = useDispatch();
+  
   const handleNewTodoInputChange = (ev) => {
     setTodoTitle(ev.target.value);
   };

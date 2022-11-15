@@ -1,17 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import StyledFooter from "./Footer.styles";
-
 import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice";
 import { selectFilter } from "../../reduxStore/mainReduxToolkit/selector";
 
+import StyledFooter from "./Footer.styles";
+
 const Footer = () => {
+  
   const arrayTodos = useSelector(({ todos }) => todos);
   const filter = useSelector(({ filter }) => filter);
-  const filterArrayTodos = useSelector(selectFilter);
-  console.log(filterArrayTodos);
+  const completedTodos = useSelector(selectFilter);
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(arrayTodos));
   }, [arrayTodos]);
@@ -23,13 +24,14 @@ const Footer = () => {
   const handleDeleteCompletedTodos = () => {
     dispatch(todosSliceActions.deleteAllCompleteTodos());
   };
+  
   if (!arrayTodos.length) {
     return null;
   }
 
   return (
     <StyledFooter>
-      <span className="info__table">Completed: {selectFilter.counter}</span>
+      <span className="info__table">Completed: {completedTodos.counter}</span>
       {filterButtons.map((item) => (
         <button
           key={item.value}
@@ -40,7 +42,7 @@ const Footer = () => {
           }
           onClick={handleFilterTodos}
         >
-          {item.status}
+          {item.value}
         </button>
       ))}
       <button
@@ -55,15 +57,12 @@ const Footer = () => {
 
 const filterButtons = [
   {
-    status: "all",
     value: "all",
   },
   {
-    status: "active",
     value: "active",
   },
   {
-    status: "completed",
     value: "completed",
   },
 ];

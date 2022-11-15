@@ -6,6 +6,7 @@ import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice"
 import StyledListItem from "./ListItem.style";
 
 const ListItem = (props) => {
+  
   const [inputState, setInputState] = React.useState(false);
 
   const dispatch = useDispatch();
