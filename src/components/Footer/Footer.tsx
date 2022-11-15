@@ -1,17 +1,17 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice";
 import { selectFilter } from "../../reduxStore/mainReduxToolkit/selector";
 
 import StyledFooter from "./Footer.styles";
+import { useAppDispatch, useAppSelector } from "../../reduxStore/hooksRedux/appHooks";
 
 const Footer = () => {
   
-  const arrayTodos = useSelector(({ todos }) => todos);
-  const filter = useSelector(({ filter }) => filter);
-  const completedTodos = useSelector(selectFilter);
-  const dispatch = useDispatch();
+  const arrayTodos = useAppSelector(({ todos }) => todos);
+  const filter = useAppSelector(({ filter }) => filter);
+  const completedTodos = useAppSelector(selectFilter);
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(arrayTodos));

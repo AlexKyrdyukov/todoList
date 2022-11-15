@@ -1,12 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 import StyledTodoLists from "./TodoLists.style";
-import ListItem from "../ListItem";
+import ListItem from "../ListItem/ListItem";
 import { selectFilter } from "../../reduxStore/mainReduxToolkit/selector";
+import { useAppSelector } from "../../reduxStore/hooksRedux/appHooks";
 
 const TodoLists = () => {
-  const filterArrayTodos = useSelector(selectFilter);
+  const filterArrayTodos = useAppSelector(selectFilter);
 
   return (
     <StyledTodoLists>

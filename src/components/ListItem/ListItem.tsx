@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../reduxStore/hooksRedux/appHooks";
 
 import { todosSliceActions } from "../../reduxStore/mainReduxToolkit/todosSlice";
 
@@ -9,7 +9,7 @@ const ListItem = (props) => {
   
   const [inputState, setInputState] = React.useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleDeleteTodo = () => {
     dispatch(todosSliceActions.deleteCompletedTodo(props.todo.id));

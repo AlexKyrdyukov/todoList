@@ -6,14 +6,14 @@ import App from "./App";
 import GlobalStyles from "./globalStyles/globalStyles";
 
 import { store } from "./reduxStore/mainReduxToolkit/store";
-import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const root = ReactDOM.createRoot(document.getElementById("root")as HTMLElement);
 root.render(
   <Provider store={store}>
     <GlobalStyles />
     <App />
-  </Provider>
+   </Provider>
 );
 
-reportWebVitals();
+
